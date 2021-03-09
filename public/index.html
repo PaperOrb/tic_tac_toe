@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/tailwind.css">
+    <title>Document</title>
+  </head>
+
+  <body class="flex flex-col h-screen overflow-hidden">
+    <header class="flex justify-center items-center text-5xl w-full h-24 bg-green-700 text-white"><h1>Tic Tac Toe</h1></header>
+
+    <article class="bg-gray-900 h-full flex flex-col text-5xl">
+      <!-- difficulty and turn -->
+      <div class="flex justify-center w-full py-4 bg-red-50">
+        x or o
+      </div>
+      <!-- piece selection -->
+      <div class="flex justify-center py-4 bg-red-400">
+        difficulty and turn
+      </div>
+      <!-- board -->
+      <div class="bg-yellow-200 flex flex-col justify-between items-center h-full">
+        <div class="flex justify-center items-center h-full bg-pink-800">
+          setup board grid here
+        </div>
+
+        <div class="flex justify-center bg-purple-400 w-full h-44">
+          restart
+        </div>
+      </div>
+    </article>
+  </body>
+
+  <script src="js/index.js"></script>
+</html>
