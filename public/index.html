@@ -8,25 +8,37 @@
     <title>Document</title>
   </head>
 
-  <body class="flex flex-col h-screen overflow-hidden">
-    <header class="flex justify-center items-center text-5xl w-full h-24 bg-green-700 text-white"><h1>Tic Tac Toe</h1></header>
+  <body class="flex flex-col h-screen text-gray-200">
+    <header class="flex justify-center items-center text-5xl w-full h-24 bg-pink-600"><h1>Tic Tac Toe</h1></header>
 
-    <article class="bg-gray-900 h-full flex flex-col text-5xl">
-      <!-- difficulty and turn -->
-      <div class="flex justify-center w-full py-4 bg-red-50">
-        x or o
+    <article class="bg-gray-800 h-full flex flex-col text-4xl">
+      <div class="flex flex-col items-center justify-center w-full py-4">
+        <label for="player">Choose player</label>
+        <div>
+          <button class="btn">X</button>
+          <button class="btn">O</button>
+        </div>
       </div>
-      <!-- piece selection -->
-      <div class="flex justify-center py-4 bg-red-400">
-        difficulty and turn
+
+      <div class="flex justify-center py-4">
+        <div data-visibility="true" class="">
+          <label for="difficulty">Select difficulty</label>
+          <select name="dropdown" id="1">
+            <option value="normal">Normal</option>
+            <option value="unbeatable">Unbeatable</option>
+          </select>
+        </div>
+        <div data-visibility="false" class="hidden">
+          turn
+        </div>
       </div>
-      <!-- board -->
-      <div class="bg-yellow-200 flex flex-col justify-between items-center h-full">
-        <div class="flex justify-center items-center h-full bg-pink-800">
+
+      <div class="bg-gray-800 flex flex-col justify-between items-center h-full">
+        <div class="flex justify-center items-center h-full border-2 border-gray-300">
           setup board grid here
         </div>
 
-        <div class="flex justify-center bg-purple-400 w-full h-44">
+        <div class="flex justify-center w-full h-44">
           restart
         </div>
       </div>
