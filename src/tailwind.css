@@ -2,7 +2,7 @@
 @tailwind components;
 
 .btn {
-  @apply rounded bg-transparent border-white border-2 p-2 mt-1;
+  @apply rounded bg-transparent border-white border-2 p-1 mt-1;
 }
 
 .btn:hover {
