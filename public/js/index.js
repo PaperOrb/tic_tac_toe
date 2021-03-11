@@ -11,15 +11,13 @@
     return { setting: difficulty };
   })();
 
-  const tictactoeBot = (function (difficulty) {
-    // alert(`I'm on ${difficulty} mode`);
-    if(difficulty === "normal") {
-      const mode = 
-    } 
-    function normalMode() {
-
+  const tictactoeBot = (function () {
+    function setDifficulty(difficulty) {
+      if (difficulty === "Normal") return alert(`I'm on ${difficulty} mode`);
+      if (difficulty === "Unbeatable") return alert(`I'm on ${difficulty} mode`);
     }
-    return { difficultyMode: mode }
+    //difficultyMode: normal || unbeatable, 
+    return { setDifficulty: setDifficulty };
   })();
 
   // const victor = (function() {
@@ -52,10 +50,13 @@
 
   buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      if (button.classList.contains("set-difficulty")) difficulty.setting = button.value;
+      if (button.classList.contains("set-difficulty")) {
+        difficulty.setting = button.value;
+        tictactoeBot.setDifficulty(difficulty.setting);
+      }
       if (button.classList.contains("set-player")) player.piece = button.value;
       if (button.classList.contains("restart")) alert(button.value);
-      toggleVisibility(button.parentElement);
+      // toggleVisibility(button.parentElement);
     });
   });
 
