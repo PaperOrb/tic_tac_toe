@@ -8,45 +8,46 @@
     <title>Document</title>
   </head>
 
-  <body class="flex flex-col h-screen text-gray-200">
+  <body class="relative flex flex-col h-screen text-gray-200">
     <header class="flex justify-center items-center text-5xl w-full h-24 bg-pink-600"><h1>Tic Tac Toe</h1></header>
-
-    <article class="bg-gray-800 h-full flex flex-col text-2xl lg:text-3xl">
-      <!-- player selection -->
-      <div class="flex flex-col items-center justify-center w-full py-2">
-        <label for="player">Choose player</label>
-        <div>
-          <button value="X" class="set-player btn mr-1">X</button>
-          <button value="O" class="set-player btn">O</button>
+    <article class="relative bg-gray-800 h-full flex flex-col text-2xl lg:text-3xl justify-between items-center">
+          <!-- board -->
+      <!-- <div id="board" class="absolute transition-height duration-1000 z-negative-1 h-0 bg-gray-800 flex flex-col justify-between items-center mt-4"> -->
+      <div id="board" class="absolute transition-height h-0 duration-1000 z-negative-1 grid grid-cols-3 justify-center items-center border-gray-300 mt-4">
+        <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 border-b-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 border-b-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 border-r-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 border-r-2 p-12 lg:p-16"></div>
+        <div class="col-span-1 p-12 lg:p-16"></div>
+        <div class="flex mt-8 col-span-3">
+          <button value="restart" class="m-auto btn restart">Restart</button>
         </div>
       </div>
-      <!-- difficulty -->
-      <div class="flex justify-center py-2">
-        <div data-visibility="true" class="flex flex-col items-center justify-center">
-          <label for="difficulty">Select difficulty</label>
-          <div class="flex justify-center">
-            <button value="Normal" class="set-difficulty btn mr-4">Normal</button>
-            <button value="Unbeatable" class="set-difficulty btn">Unbeatable</button>  
+      <!-- choices -->
+      <div class="flex flex-col relative">
+        <!-- player selection -->
+        <div id="piece-selector" class="z-10 flex h-36 flex-col items-center justify-center w-full pt-6">
+          <label for="player" class="text-white border-b-2 p-2">Choose player</label>
+          <div class="h-36 pt-2">
+            <button value="X" class="set-player btn mr-1">X</button>
+            <button value="O" class="set-player btn">O</button>
           </div>
         </div>
-        <div data-visibility="false" class="hidden">
-          turn
-        </div>
-      </div>
-      <!-- board -->
-      <div class="bg-gray-800 flex flex-col justify-between items-center h-full mt-4">
-        <div class="grid grid-cols-3 justify-center items-center border-gray-300">
-          <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 border-b-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 border-r-2 border-b-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 border-b-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 border-r-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 border-r-2 p-12 lg:p-16"></div>
-          <div class="col-span-1 p-12 lg:p-16"></div>
-          <div class="flex mt-8 col-span-3">
-            <button value="restart" class="m-auto btn restart">Restart</button>
+        <!-- difficulty -->
+        <div id="difficulty-selector" class="z-10 flex justify-center p-4">
+          <div data-visibility="true" class="flex flex-col items-center justify-center">
+            <label for="difficulty" class="text-white border-b-2 p-2">Select difficulty</label>
+            <div class="flex justify-center pt-2">
+              <button value="Normal" class="set-difficulty btn mr-4">Normal</button>
+              <button value="Unbeatable" class="set-difficulty btn">Unbeatable</button>  
+            </div>
+          </div>
+          <div data-visibility="false" class="hidden">
+            turn
           </div>
         </div>
       </div>

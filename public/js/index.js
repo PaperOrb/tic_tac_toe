@@ -13,8 +13,8 @@
 
   const tictactoeBot = (function () {
     function setDifficulty(difficulty) {
-      if (difficulty === "Normal") return alert(`I'm on ${difficulty} mode`);
-      if (difficulty === "Unbeatable") return alert(`I'm on ${difficulty} mode`);
+      if (difficulty === "Normal") return "hi";
+      if (difficulty === "Unbeatable") return "hi";
     }
     //difficultyMode: normal || unbeatable, 
     return { setDifficulty: setDifficulty };
@@ -47,14 +47,24 @@
 
   // menu button events
   const buttons = document.querySelectorAll("button");
+  const difficultySelector = document.querySelector("#difficulty-selector");
+  const pieceSelector = document.querySelector("#piece-selector");
+  const board = document.querySelector("#board");
 
   buttons.forEach((button) => {
     button.addEventListener("click", (e) => {
       if (button.classList.contains("set-difficulty")) {
         difficulty.setting = button.value;
         tictactoeBot.setDifficulty(difficulty.setting);
+        button.classList.toggle("toggled-btn");
+        board.classList.toggle("board-visibility");
       }
-      if (button.classList.contains("set-player")) player.piece = button.value;
+      if (button.classList.contains("set-player")) {
+        player.piece = button.value;
+        button.classList.toggle("btn");
+        button.classList.toggle("toggled-btn");
+        pieceSelector.classList.toggle("hide-me");
+      }
       if (button.classList.contains("restart")) alert(button.value);
       // toggleVisibility(button.parentElement);
     });
