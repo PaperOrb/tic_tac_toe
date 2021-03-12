@@ -43,6 +43,25 @@
   //   return { next, turnVar }
   // }
 
+    // core game loop
+    const boardSquares = document.querySelectorAll("[data-board-square='board-square']")
+
+    function gameLoop() {
+      boardSquares.forEach((square) => {
+        square.addEventListener("click", function (e) {
+          alert(e.target.id)
+        });
+      });
+    };
+
+    // while(victor.check === null)
+    // renderBoard
+    // clickedSquare = document.querySelector(e.target)
+    // if(gameboard.input(clickedSquare) === "failed") continue;
+    // ai.move
+    // victoryDOM.innerHTML = victor.check
+    // toggleVisibility(victoryDOM)
+
   // menu button events
   const buttons = document.querySelectorAll("button");
   const board = document.querySelector("#board");
@@ -66,30 +85,9 @@
       if (player.piece !== undefined && difficulty.setting !== undefined) {
         board.classList.toggle("board-visibility");
         buttons.forEach((button) => button.classList.remove("toggled-btn"));
-        // hand over to gameloop function
+        gameLoop();
         // then begin working on inputting x's and o's into array and rendering on board
       };
     });
   });
-
-  // core game loop
-  document.addEventListener("click", function (e) {
-    // detect button clicked
-  });
-  // toggleVisibility(difficultyDOM)
-  // create AI object
-  // user picks x or o // if(player.piece === null)
-  // toggleVisibility(playerSelectDOM)
-  // create playerObject()
-  //game begins if difficulty + player selected
-  // if player === playerObject && ai = AIobject
-  // addEventListener(submit, checks for restart)
-  // addEventListener(click, function(e) {}) // player starts inputting from here on
-  // while(victor.check === null)
-  // renderBoard
-  // clickedSquare = document.querySelector(e.target)
-  // if(gameboard.input(clickedSquare) === "failed") continue;
-  // ai.move
-  // victoryDOM.innerHTML = victor.check
-  // toggleVisibility(victoryDOM)
 })();
