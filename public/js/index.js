@@ -1,21 +1,28 @@
 // revealing module pattern to start the game
 (function ticTacToe() {
+  const boardSquares = document.querySelectorAll("[data-board-square='board-square']")
+  const buttons = document.querySelectorAll("button");
+  const difficultyButtons = document.querySelectorAll(".set-difficulty");
+  const playerButtons = document.querySelectorAll(".set-player");
+  const restartButton = document.querySelectorAll(".restart");
+  const board = document.querySelector("#board");
+
   // factories
   const player = (function (piece) {
     return { piece: piece };
   })();
 
-  const difficulty = (function (difficulty) {
-    return { setting: difficulty };
-  })();
-
   const tictactoeBot = (function () {
-    function setDifficulty(difficulty) {
+    function difficultySetting(difficulty) {
       if (difficulty === "Normal") return "hi";
       if (difficulty === "Unbeatable") return "hi";
     }
     //difficultyMode: normal || unbeatable, 
-    return { setDifficulty: setDifficulty };
+    return { difficultySetting: difficultySetting };
+  })();
+
+  const difficulty = (function (difficulty) {
+    return { setting: difficulty };
   })();
 
   // const victor = (function() {
@@ -44,15 +51,6 @@
   // }
 
     // core game loop
-    const boardSquares = document.querySelectorAll("[data-board-square='board-square']")
-
-    function gameLoop() {
-      boardSquares.forEach((square) => {
-        square.addEventListener("click", function (e) {
-          alert(e.target.id)
-        });
-      });
-    };
 
     // while(victor.check === null)
     // renderBoard
@@ -62,32 +60,40 @@
     // victoryDOM.innerHTML = victor.check
     // toggleVisibility(victoryDOM)
 
-  // menu button events
-  const buttons = document.querySelectorAll("button");
-  const board = document.querySelector("#board");
-
-  buttons.forEach((button) => {
+  // difficulty selection buttons
+  difficultyButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      if (button.classList.contains("set-difficulty")) {
-        difficulty.setting = button.value;
-        tictactoeBot.setDifficulty(difficulty.setting);
-        button.classList.toggle("toggled-btn");
-      };
-      if (button.classList.contains("set-player")) {
-        player.piece = button.value;
-        button.classList.toggle("toggled-btn");
-      };
-      if (button.classList.contains("restart")) {
-        board.classList.toggle("board-visibility");
-        player.piece = undefined;
-        difficulty.setting = undefined;
-      };
-      if (player.piece !== undefined && difficulty.setting !== undefined) {
-        board.classList.toggle("board-visibility");
-        buttons.forEach((button) => button.classList.remove("toggled-btn"));
-        gameLoop();
-        // then begin working on inputting x's and o's into array and rendering on board
-      };
+      difficulty.setting = button.value; 
+      button.classList.toggle("toggled-btn");
+      tictactoeBot.difficultySetting(difficulty);
+      if (player.piece !== undefined && difficulty.setting !== undefined) startGame();
     });
   });
+
+  // player selection buttons
+  playerButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        player.piece = button.value;
+        button.classList.toggle("toggled-btn");
+        if (player.piece !== undefined && difficulty.setting !== undefined) startGame();
+    });
+  });
+
+  // restart button
+  restartButton.addEventListener("click", () => {
+      board.classList.toggle("board-visibility");
+      player.piece = undefined;
+      difficulty.setting = undefined;
+  });
+
+  function startGame() {
+    boardSquares.forEach((square) => {
+      square.addEventListener("click", function (e) {
+        alert(e.target.id)
+        board.classList.toggle("board-visibility");
+        buttons.forEach((button) => button.classList.remove("toggled-btn"));
+      });
+    });
+  };
+    // then begin working on inputting x's and o's into array and rendering on board
 })();
