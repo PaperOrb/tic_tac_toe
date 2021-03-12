@@ -4,7 +4,7 @@
   const buttons = document.querySelectorAll("button");
   const difficultyButtons = document.querySelectorAll(".set-difficulty");
   const playerButtons = document.querySelectorAll(".set-player");
-  const restartButton = document.querySelectorAll(".restart");
+  const restartButton = document.querySelector(".restart");
   const board = document.querySelector("#board");
 
   // factories
@@ -87,11 +87,12 @@
   });
 
   function startGame() {
+    board.classList.toggle("board-visibility");
+    buttons.forEach((button) => button.classList.remove("toggled-btn"));
+
     boardSquares.forEach((square) => {
       square.addEventListener("click", function (e) {
-        alert(e.target.id)
-        board.classList.toggle("board-visibility");
-        buttons.forEach((button) => button.classList.remove("toggled-btn"));
+        alert(e.target.id);
       });
     });
   };
