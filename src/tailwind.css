@@ -10,11 +10,11 @@
 }
 
 .toggled-btn {
-  @apply rounded bg-transparent text-white border-white p-1 mt-1 border-2;
+  @apply rounded animate-bounce bg-transparent text-white border-white p-1 mt-1 border-2;
 }
 
 .board-visibility {
-  @apply h-auto opacity-100 z-30 !important;
+  @apply scale-100 z-30 !important;
 }
 
 .z-negative-1 {

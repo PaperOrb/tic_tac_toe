@@ -613,12 +613,14 @@ video {
   padding: 0.25rem;
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
+  -webkit-animation: bounce 1s infinite;
+          animation: bounce 1s infinite;
 }
 
 .board-visibility {
-  height: auto !important;
-  opacity: 1 !important;
   z-index: 30 !important;
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
 }
 
 .z-negative-1 {
