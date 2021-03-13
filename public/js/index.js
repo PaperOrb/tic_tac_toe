@@ -7,11 +7,12 @@
   const restartButton = document.querySelector(".restart");
   const board = document.querySelector("#board");
 
-  // factories
+  // player
   const player = (function (piece) {
     return { piece: piece };
   })();
 
+  // ttt bot
   const ticTacToeBot = (function () {
     let mode = null;
 
@@ -32,13 +33,9 @@
       mode = difficulty
     };
 
-    function getMode() { alert(mode) };
+    function getMode() { return mode };
 
     return { setMode, getMode, makeMove };
-  })();
-
-  const difficulty = (function (difficulty) {
-    return { setting: difficulty };
   })();
 
   // const victor = (function() {
@@ -76,7 +73,8 @@
   // victoryDOM.innerHTML = victor.check
   // toggleVisibility(victoryDOM)
   function choicesComplete() {
-    if (player.piece !== undefined && difficulty.setting !== undefined) return true;
+    alert(ticTacToeBot.getMode());
+    if (player.piece !== undefined && ticTacToeBot.getMode() !== null) return true;
     return false;
   }
 
@@ -84,9 +82,9 @@
   difficultyButtons.forEach((button) => {
     button.addEventListener("click", () => {
       difficultyButtons.forEach((btn) => btn.classList.remove("toggled-btn"));
-      difficulty.setting = button.value;
-      button.classList.toggle("toggled-btn");
       ticTacToeBot.setMode(button.value);
+      button.classList.toggle("toggled-btn");
+
       if (choicesComplete()) startGame();
     });
   });
@@ -105,11 +103,10 @@
   restartButton.addEventListener("click", () => {
     board.classList.toggle("board-visibility");
     player.piece = undefined;
-    difficulty.setting = undefined;
+    ticTacToeBot.setMode(null);
   });
 
   function startGame() {
-    ticTacToeBot.getMode();
     ticTacToeBot.makeMove();
     board.classList.toggle("board-visibility");
     buttons.forEach((button) => button.classList.remove("toggled-btn"));
