@@ -1,11 +1,33 @@
 // revealing module pattern to start the game
 (function ticTacToe() {
-  const boardSquares = document.querySelectorAll("[data-board-square='board-square']");
   const buttons = document.querySelectorAll("button");
   const difficultyButtons = document.querySelectorAll(".set-difficulty");
   const playerButtons = document.querySelectorAll(".set-player");
   const restartButton = document.querySelector(".restart");
   const board = document.querySelector("#board");
+  const boardSquares = document.querySelectorAll("[data-board-square='board-square']");
+
+
+  // game board
+  const gameBoard = (function() {
+    let boardArr = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
+
+    function render() {
+
+    };
+
+    function input(piece, clickedTile) {
+      if(clickedTile.innerHTML === '') clickedTile.innerHTML = piece;
+    }
+
+    return { array: boardArr, render, input }
+  })();
+
+
+  // function input(clickIndex) { assigns clickIndex to input var. if input is restart, reset vars }
+  // function spotIsTaken(elementId) { returns true/false }
+  // function updateBoard() { adds input to board if spot isn't taken }
+  // return { boardArr, input } // no need to expose anything else
 
   // player
   const player = (function (piece) {
@@ -17,11 +39,11 @@
     let mode = null;
 
     function normalMove() {
-      alert("normal!");
+      return "normal!";
     }
 
     function unbeatableMove() {
-      alert("Unbeatable!");
+      return "Unbeatable!";
     }
 
     function makeMove() {
@@ -45,16 +67,6 @@
   // return { check }
   // })
 
-  // let gameBoard = (function () { returns arr })
-  // let boardArr = [["", "", ""], ["", "", ""], ["", "", ""]]
-  // let clickIndex = null
-  // function input(clickIndex) { assigns clickIndex to input var. if input is restart, reset vars }
-  // function spotIsTaken(elementId) { returns true/false }
-  // function updateBoard() { adds input to board if spot isn't taken }
-  // return { boardArr, input } // no need to expose anything else
-
-  // function toggleVisibility(element) { returns nothing }
-
   // function renderBoard() {}
 
   // currentTurn = function(blank or "next") {
@@ -73,7 +85,6 @@
   // victoryDOM.innerHTML = victor.check
   // toggleVisibility(victoryDOM)
   function choicesComplete() {
-    alert(ticTacToeBot.getMode());
     if (player.piece !== undefined && ticTacToeBot.getMode() !== null) return true;
     return false;
   }
@@ -111,11 +122,13 @@
     board.classList.toggle("board-visibility");
     buttons.forEach((button) => button.classList.remove("toggled-btn"));
 
+    // core game loop. player clicks, then appropriate methods are triggered
     boardSquares.forEach((square) => {
-      square.addEventListener("click", function (e) {
-        alert(e.target.id);
+      square.addEventListener("click", () => {
+        gameBoard.input("x", square);
+        // gameBoard.input needs to update boardArray
+        // gameBoard.clear on restart button
       });
     });
   }
-  // then begin working on inputting x's and o's into array and rendering on board
 })();
