@@ -10,14 +10,23 @@
 
   // game board
   const gameBoard = (function() {
-    let boardArr = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
+    let boardArr = ["", "", "", "", "", "", "", "", ""];
 
     function render() {
 
     };
 
+    function spotAvailable(tileIndex) {
+      if (boardArr[tileIndex] === "") return true;
+      return false;
+    };
+
+    // calls verification on clickedTile index in array
     function input(piece, clickedTile) {
-      if(clickedTile.innerHTML === '') clickedTile.innerHTML = piece;
+      let tileIndex = Number(clickedTile.id - 1);
+      if (!spotAvailable(tileIndex)) return false; // guard clause
+      clickedTile.innerHTML = piece;
+      boardArr[tileIndex] = piece;
     }
 
     return { array: boardArr, render, input }
