@@ -4,32 +4,36 @@
   const difficultyButtons = document.querySelectorAll(".set-difficulty");
   const playerButtons = document.querySelectorAll(".set-player");
   const restartButton = document.querySelector(".restart");
-  const board = document.querySelector("#board");
+  const boardHtml = document.querySelector("#board");
   const boardSquares = document.querySelectorAll("[data-board-square='board-square']");
-
 
   // game board
   const gameBoard = (function() {
     let boardArr = ["", "", "", "", "", "", "", "", ""];
 
-    function render() {
-
-    };
+    function getArr() {
+      return boardArr;
+    }
 
     function spotAvailable(tileIndex) {
       if (boardArr[tileIndex] === "") return true;
       return false;
     };
 
-    // calls verification on clickedTile index in array
+    // verifies spot is empty before inputting to boardArr + html
     function input(piece, clickedTile) {
       let tileIndex = Number(clickedTile.id - 1);
       if (!spotAvailable(tileIndex)) return false; // guard clause
       clickedTile.innerHTML = piece;
       boardArr[tileIndex] = piece;
-    }
+    };
 
-    return { array: boardArr, render, input }
+    function clear() {
+      boardArr = ["", "", "", "", "", "", "", "", ""];
+      boardSquares.forEach(function(square) { square.innerHTML = "" } );
+    };
+
+    return { getArr, input, clear };
   })();
 
 
@@ -121,14 +125,16 @@
 
   // restart button
   restartButton.addEventListener("click", () => {
-    board.classList.toggle("board-visibility");
+    gameBoard.clear();
+    gameBoard.getArr();
+    boardHtml.classList.toggle("board-visibility");
     player.piece = undefined;
     ticTacToeBot.setMode(null);
   });
 
   function startGame() {
     ticTacToeBot.makeMove();
-    board.classList.toggle("board-visibility");
+    boardHtml.classList.toggle("board-visibility");
     buttons.forEach((button) => button.classList.remove("toggled-btn"));
 
     // core game loop. player clicks, then appropriate methods are triggered
