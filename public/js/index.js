@@ -125,7 +125,7 @@
     // core game loop. player clicks, then appropriate methods are triggered
     boardSquares.forEach((square) => {
       square.addEventListener("click", () => {
-        gameBoard.input("x", square);
+        gameBoard.input(player.piece, square);
         // gameBoard.input needs to update boardArray
         // gameBoard.clear on restart button
       });
