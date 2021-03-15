@@ -36,20 +36,21 @@
     return { getArr, input, clear };
   })();
 
-
-  // function input(clickIndex) { assigns clickIndex to input var. if input is restart, reset vars }
-  // function spotIsTaken(elementId) { returns true/false }
-  // function updateBoard() { adds input to board if spot isn't taken }
-  // return { boardArr, input } // no need to expose anything else
-
   // player
-  const player = (function (piece) {
-    return { piece: piece };
+  const player = (function() {
+    let piece = undefined;
+
+    function setPiece(pc) { piece = pc };
+
+    function getPiece() { return piece };
+
+    return { getPiece, setPiece };
   })();
 
   // ttt bot
   const ticTacToeBot = (function () {
     let mode = null;
+    let piece = null;
 
     function normalMove() {
       return "normal!";
@@ -64,41 +65,40 @@
       if (mode === "Unbeatable") { unbeatableMove() };
     }
 
-    function setMode(difficulty) {
-      mode = difficulty
-    };
+    function setMode(difficulty) { mode = difficulty };
 
     function getMode() { return mode };
 
-    return { setMode, getMode, makeMove };
+    function setPiece(pc) { piece = pc }
+
+    function getPiece() { return piece }
+
+    return { setMode, getMode, makeMove, setPiece, getPiece };
   })();
 
-  // const victor = (function() {
-  // const winningSpots = [[]]
-  // let victor = null
-  // function check() { sets victor }
-  // return { check }
-  // })
+  const victor = (function() {
+    const winningCombos = [
+      [1, 2, 3], [4, 5, 6], [7, 8, 9],
+      [1, 4, 6], [2, 5, 8], [3, 6, 9],
+      [1, 5, 9], [3, 5, 7]
+    ]
 
-  // function renderBoard() {}
+    function detect() {
+      let victor = [player.getPiece(), ticTacToeBot.getPiece()].filter((piece) => { // filters which piece
+        return winningCombos.some((tileCombo) => { // has some winning combo
+          return tileCombo.every((tileIndex) => { // where every tile has said piece on it
+            return gameBoard.getArr()[tileIndex - 1] === piece;
+          });
+        });
+      });
+      return victor.length === 0 ? false : victor.join('');
+    };
 
-  // currentTurn = function(blank or "next") {
-  //   let turnVar = player
-  //   function next() { ternary operator to switch turn}
-  //   return { next, turnVar }
-  // }
+    return { detect };
+  })();
 
-  // core game loop
-
-  // while(victor.check === null)
-  // renderBoard
-  // clickedSquare = document.querySelector(e.target)
-  // if(gameboard.input(clickedSquare) === "failed") continue;
-  // ai.move
-  // victoryDOM.innerHTML = victor.check
-  // toggleVisibility(victoryDOM)
   function choicesComplete() {
-    if (player.piece !== undefined && ticTacToeBot.getMode() !== null) return true;
+    if (player.getPiece() !== undefined && ticTacToeBot.getMode() !== null) return true;
     return false;
   }
 
@@ -117,7 +117,8 @@
   playerButtons.forEach((button) => {
     button.addEventListener("click", () => {
       playerButtons.forEach((btn) => btn.classList.remove("toggled-btn"));
-      player.piece = button.value;
+      player.setPiece(button.value);
+      ticTacToeBot.setPiece(button.value === "X" ? "O" : "X");
       button.classList.toggle("toggled-btn");
       if (choicesComplete()) startGame();
     });
@@ -128,7 +129,8 @@
     gameBoard.clear();
     gameBoard.getArr();
     boardHtml.classList.toggle("board-visibility");
-    player.piece = undefined;
+    player.setPiece(undefined);
+    ticTacToeBot.setPiece(undefined);
     ticTacToeBot.setMode(null);
   });
 
@@ -140,9 +142,10 @@
     // core game loop. player clicks, then appropriate methods are triggered
     boardSquares.forEach((square) => {
       square.addEventListener("click", () => {
-        gameBoard.input(player.piece, square);
-        // gameBoard.input needs to update boardArray
-        // gameBoard.clear on restart button
+        if (victor.detect()) alert('');
+        // check for tie when all squares occupied
+        gameBoard.input(player.getPiece(), square);
+        // ai.move
       });
     });
   }
