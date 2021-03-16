@@ -79,7 +79,7 @@
   const victor = (function() {
     const winningCombos = [
       [1, 2, 3], [4, 5, 6], [7, 8, 9],
-      [1, 4, 6], [2, 5, 8], [3, 6, 9],
+      [1, 4, 7], [2, 5, 8], [3, 6, 9],
       [1, 5, 9], [3, 5, 7]
     ]
 
@@ -94,7 +94,13 @@
       return victor.length === 0 ? false : victor.join('');
     };
 
-    return { detect };
+    function tied() {
+     return gameBoard.getArr().every((tile) => {
+        return tile !== "";
+      });
+    };
+
+    return { detect, tied };
   })();
 
   function choicesComplete() {
@@ -142,9 +148,9 @@
     // core game loop. player clicks, then appropriate methods are triggered
     boardSquares.forEach((square) => {
       square.addEventListener("click", () => {
-        if (victor.detect()) alert('');
-        // check for tie when all squares occupied
         gameBoard.input(player.getPiece(), square);
+        if (victor.detect()) return 'hi';// alert('');
+        if (victor.tied()) alert('tied');
         // ai.move
       });
     });
