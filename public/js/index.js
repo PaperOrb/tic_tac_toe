@@ -53,17 +53,22 @@
     let piece = null;
 
     function normalMove() {
-      return "normal!";
+     let emptySpots = [...boardSquares].filter((square) => {
+       return square.innerHTML === "";
+     });
+    let index = Math.floor(Math.random() * emptySpots.length);
+    // alert(emptySpots[index]);
+    return emptySpots[index];
     }
 
     function unbeatableMove() {
       return "Unbeatable!";
     }
 
-    function makeMove() {
-      if (mode === "Normal") { normalMove() };
-      if (mode === "Unbeatable") { unbeatableMove() };
-    }
+    function pickTile() {
+      return normalMove();
+      // if (mode === "Unbeatable") { unbeatableMove() };
+    };
 
     function setMode(difficulty) { mode = difficulty };
 
@@ -73,7 +78,7 @@
 
     function getPiece() { return piece }
 
-    return { setMode, getMode, makeMove, setPiece, getPiece };
+    return { setMode, getMode, pickTile, setPiece, getPiece };
   })();
 
   const victor = (function() {
@@ -133,26 +138,25 @@
   // restart button
   restartButton.addEventListener("click", () => {
     gameBoard.clear();
-    gameBoard.getArr();
     boardHtml.classList.toggle("board-visibility");
     player.setPiece(undefined);
     ticTacToeBot.setPiece(undefined);
     ticTacToeBot.setMode(null);
   });
 
+  // enable board and hide buttons
   function startGame() {
-    ticTacToeBot.makeMove();
     boardHtml.classList.toggle("board-visibility");
     buttons.forEach((button) => button.classList.remove("toggled-btn"));
-
-    // core game loop. player clicks, then appropriate methods are triggered
-    boardSquares.forEach((square) => {
-      square.addEventListener("click", () => {
-        gameBoard.input(player.getPiece(), square);
-        if (victor.detect()) return 'hi';// alert('');
-        if (victor.tied()) alert('tied');
-        // ai.move
-      });
-    });
   }
+
+  // core game loop. player clicks, then appropriate methods are triggered
+  boardSquares.forEach((square) => {
+    square.addEventListener("click", function() {
+      gameBoard.input(player.getPiece(), square);
+      gameBoard.input(ticTacToeBot.getPiece(), ticTacToeBot.pickTile()); 
+      if (victor.detect()) alert('v');
+      if (victor.tied()) alert('tied');
+    });
+  });
 })();
