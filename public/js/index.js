@@ -178,7 +178,7 @@
   // core game loop. player clicks, then appropriate methods are triggered
   boardSquares.forEach((square) => {
     square.addEventListener("click", function() {
-      gameBoard.input(player.getPiece(), square);
+      if (gameBoard.input(player.getPiece(), square) === false) return;
       if (victor.detect()) {
         victor.gameOverMsg("victory");
         return quitGame();
