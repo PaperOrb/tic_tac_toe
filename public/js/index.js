@@ -64,7 +64,7 @@
 
     function unbeatableMove() {
       return "Unbeatable!";
-      // https://invidious.snopyta.org/watch?v=trKjYdBASyQ best vid on minimax algorithm
+      // https://invidious.snopyta.org/watch?v=trKjYdBASyQ best vid on minimax algorithm should I decide to implement this
     }
 
     function pickTile() {
