@@ -63,6 +63,7 @@
 
     function unbeatableMove() {
       return "Unbeatable!";
+      // https://invidious.snopyta.org/watch?v=trKjYdBASyQ best vid on minimax algorithm
     }
 
     function pickTile() {

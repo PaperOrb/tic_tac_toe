@@ -17,6 +17,10 @@
   @apply scale-100 z-30 !important;
 }
 
+.disabled-btn {
+  @apply border-gray-500 text-gray-500 !important;
+}
+
 .z-negative-1 {
   z-index: -1
 }
