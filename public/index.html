@@ -10,7 +10,9 @@
 
   <body class="relative flex flex-col h-screen text-gray-200">
     <header class="flex justify-center items-center text-5xl w-full h-24 bg-pink-600"><h1>Tic Tac Toe</h1></header>
-    <article class="relative bg-gray-800 h-full flex flex-col text-2xl lg:text-3xl justify-between items-center">
+    <div style="transition: opacity 1s" id="msg-overlay" class="absolute opacity-0 text-9xl text-center bg-black z-negative-1 w-screen h-screen"></div>
+
+    <article class="relative bg-gray-800 h-full flex flex-col text-2xl lg:text-3xl justify-between items-center z-0">
       <!-- board -->
       <div id="board" class="absolute transition-transform overflow-hidden transform scale-0 duration-1000 grid grid-cols-3 justify-center items-center border-gray-300 bg-gray-800 mt-4">
         <div class="relative overflow-clip col-span-1 border-r-2 border-b-2 p-12 lg:p-16">

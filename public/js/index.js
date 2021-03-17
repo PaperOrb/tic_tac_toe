@@ -6,6 +6,7 @@
   const restartButton = document.querySelector(".restart");
   const boardHtml = document.querySelector("#board");
   const boardSquares = document.querySelectorAll("[data-board-square='board-square']");
+  const messageOverlay = document.querySelector("#msg-overlay");
 
   // game board
   const gameBoard = (function() {
@@ -83,16 +84,35 @@
   })();
 
   const victor = (function() {
+    let victor = null;
     const winningCombos = [
       [1, 2, 3], [4, 5, 6], [7, 8, 9],
       [1, 4, 7], [2, 5, 8], [3, 6, 9],
       [1, 5, 9], [3, 5, 7]
     ]
 
+    function gameOverMsg(result) {
+      if (result === "victory") messageOverlay.innerHTML = `${victor} wins!`;
+      if (result === "tie") messageOverlay.innerHTML = "Tie!";
+      messageOverlay.classList.toggle("z-50");
+      messageOverlay.classList.toggle("opacity-80");
+
+      setTimeout(() => {
+        messageOverlay.classList.toggle("opacity-80");
+      }, 2000);
+
+      setTimeout(() => {
+        messageOverlay.classList.toggle("z-50");
+      }, 3000);
+    }
+
     function detect() {
-      let victor = [player.getPiece(), ticTacToeBot.getPiece()].filter((piece) => { // filters which piece
-        return winningCombos.some((tileCombo) => { // has some winning combo
-          return tileCombo.every((tileIndex) => { // where every tile has said piece on it
+      victor = [player.getPiece(), ticTacToeBot.getPiece()].filter((piece) => {
+        // filters which piece
+        return winningCombos.some((tileCombo) => {
+          // has some winning combo
+          return tileCombo.every((tileIndex) => {
+            // where every tile has said piece on it
             return gameBoard.getArr()[tileIndex - 1] === piece;
           });
         });
@@ -106,7 +126,7 @@
       });
     };
 
-    return { detect, tied };
+    return { detect, tied, gameOverMsg };
   })();
 
   function choicesComplete() {
@@ -138,12 +158,16 @@
 
   // restart button
   restartButton.addEventListener("click", () => {
+    quitGame();
+  });
+
+  function quitGame() {
     gameBoard.clear();
     boardHtml.classList.toggle("board-visibility");
     player.setPiece(undefined);
     ticTacToeBot.setPiece(undefined);
     ticTacToeBot.setMode(null);
-  });
+  }
 
   // enable board and hide buttons
   function startGame() {
@@ -155,9 +179,23 @@
   boardSquares.forEach((square) => {
     square.addEventListener("click", function() {
       gameBoard.input(player.getPiece(), square);
+      if (victor.detect()) {
+        victor.gameOverMsg("victory");
+        return quitGame();
+      };
+      if (victor.tied()) {
+        victor.gameOverMsg("tie");
+        return quitGame()
+      };
       gameBoard.input(ticTacToeBot.getPiece(), ticTacToeBot.pickTile()); 
-      if (victor.detect()) alert('v');
-      if (victor.tied()) alert('tied');
+      if (victor.detect()) {
+        victor.gameOverMsg("victory");
+        return quitGame();
+      };
+      if (victor.tied()) {
+        victor.gameOverMsg("tie");
+        return quitGame()
+      };
     });
   });
 })();
